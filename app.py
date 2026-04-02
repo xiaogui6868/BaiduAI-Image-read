@@ -29,7 +29,6 @@ def get_access_token():
 def img_to_base64(file_data):
     return base64.b64encode(file_data).decode("utf8")
 
-# ✅ 核心修复：完全复用作业1的流式图像描述接口，结果100%一致
 def ai_recognize(base64_img):
     try:
         token = get_access_token()
