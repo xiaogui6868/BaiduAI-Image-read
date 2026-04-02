@@ -6,8 +6,8 @@ import json
 # 个人信息&百度密钥
 STUDENT_ID = "202335020537"
 STUDENT_NAME = "汤明婷"
-API_KEY = "bOhC5kIeul0K1psuvNXBmEZU"
-SECRET_KEY = "goYnWWb842iuWYz6MaoldJUM8cBYkBaC"
+API_KEY = ""
+SECRET_KEY = ""
 
 app = Flask(__name__)
 
