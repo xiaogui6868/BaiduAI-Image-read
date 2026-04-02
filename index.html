@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>AI图像识别-作业2（网页升级版）</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "微软雅黑", sans-serif;
+        }
+        body {
+            background-color: #f5f5f5;
+            padding: 30px;
+        }
+        .info-bar {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #34495e;
+            margin-bottom: 25px;
+        }
+        .upload-area {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        input[type="file"] {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        button {
+            padding: 12px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #1976D2;
+        }
+        #result {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            min-height: 150px;
+            font-size: 16px;
+            line-height: 1.6;
+            white-space: pre-line;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <!-- 作业2硬性要求：前端固定展示学号+姓名 -->
+    <div class="info-bar">
+        学号：{{ sid }} &nbsp;&nbsp;&nbsp;&nbsp; 姓名：{{ name }}
+    </div>
+
+    <div class="container">
+        <h2>作业2｜百度AI通用物体识别（网页升级版）</h2>
+        <hr style="margin-bottom: 25px; border: 1px solid #eee;">
+
+        <div class="upload-area">
+            <input type="file" id="imgFile" accept="image/*">
+            <br>
+            <button onclick="uploadImg()">开始AI高精度识别</button>
+        </div>
+
+        <div id="result">ℹ️ 请选择图片，点击按钮开始识别...</div>
+    </div>
+
+    <script>
+        async function uploadImg() {
+            const fileInput = document.getElementById("imgFile");
+            const resultBox = document.getElementById("result");
+
+            if (!fileInput.files || fileInput.files.length === 0) {
+                alert("请先选择一张图片！");
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append("img", file);
+
+            resultBox.innerText = "🔍 正在进行AI高精度识别，请稍候...";
+
+            try {
+                const response = await fetch("/upload", {
+                    method: "POST",
+                    body: formData
+                });
+                const result = await response.text();
+                resultBox.innerText = result;
+            } catch (error) {
+                resultBox.innerText = "❌ 网络请求失败，请检查后端服务是否正常运行";
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html>
