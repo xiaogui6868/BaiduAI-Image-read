@@ -3,7 +3,7 @@ import base64
 import requests
 import json
 
-# 你的个人信息&百度密钥（完全沿用作业1）
+# 个人信息&百度密钥
 STUDENT_ID = "202335020537"
 STUDENT_NAME = "汤明婷"
 API_KEY = "bOhC5kIeul0K1psuvNXBmEZU"
@@ -11,7 +11,7 @@ SECRET_KEY = "goYnWWb842iuWYz6MaoldJUM8cBYkBaC"
 
 app = Flask(__name__)
 
-# 完全沿用作业1的Token获取逻辑
+# Token获取逻辑
 def get_access_token():
     url = "https://aip.baidubce.com/oauth/2.0/token"
     params = {
@@ -25,7 +25,7 @@ def get_access_token():
     except:
         return None
 
-# 适配网页上传的图片转base64（和作业1逻辑一致）
+# 适配网页上传的图片转base64
 def img_to_base64(file_data):
     return base64.b64encode(file_data).decode("utf8")
 
@@ -36,7 +36,6 @@ def ai_recognize(base64_img):
         if not token:
             return "❌ 获取Token失败，请检查网络或API_KEY"
 
-        # 完全和作业1一样的接口！
         url = "https://aip.baidubce.com/stream/2.0/image-classify/v1/object_recognition?access_token=" + token
 
         payload = json.dumps({
